@@ -1598,6 +1598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc3a1c526cce9141a8a024ee0561823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeadTrackingReceiver
+  executableName: eyetracking.exe
+  startServerOnPlay: 1
+  showConsoleWindow: 0
   port: 5065
   objectToMove: {fileID: 2111494835}
   cameraTransform: {fileID: 519420032}
