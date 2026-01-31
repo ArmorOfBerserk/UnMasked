@@ -104,3 +104,6 @@ InitTestScene*.unity*
 dist/
 Assets/StreamingAssets/eyetracking.exe
 .gitignore
+dist/
+
+.venv

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d05270a17b3670e4eb4a8cbd28e9e3de
+guid: 3971e5fc82b9f7d4fa5b38e92c0288fe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1045540170386875117
-    second: dunjo_cover_0
+      213: -2521409195606705084
+    second: Tutorial_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dunjo_cover_0
+      name: Tutorial_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 315
-        height: 250
+        width: 1024
+        height: 572
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 31d50b921ce7d71f0800000000000000
-      internalID: -1045540170386875117
+      spriteID: 44c757212b7220dd0800000000000000
+      internalID: -2521409195606705084
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      dunjo_cover_0: -1045540170386875117
+      Tutorial_0: -2521409195606705084
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
