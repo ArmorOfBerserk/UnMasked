@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Variabili di movimento")]
     [SerializeField] float movSpeed;
     [SerializeField] float jumpForce;
+    private InputAction moveAction;
+    private InputAction jumpAction;
+
+
 
     [SerializeField] private Rigidbody2D rb;
 
@@ -39,24 +43,53 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        
+        moveAction = playerInput.actions["Move"];
+        jumpAction = playerInput.actions["Jump"];
+
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
-        playerInput.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        playerInput.actions["Move"].canceled += ctx => moveInput = Vector3.zero;
-        playerInput.actions["Jump"].performed += ctx => JumpAction();
+        moveAction.performed += OnMove;
+        moveAction.canceled  += OnMoveCanceled;
+        
+        jumpAction.performed += OnJump;
     }
 
-
-    private void OnDisable()
+    void OnDisable()
     {
-        playerInput.actions["Move"].performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
-        playerInput.actions["Move"].canceled -= ctx => moveInput = Vector3.zero;
-        playerInput.actions["Jump"].performed -= ctx => JumpAction();
+        moveAction.performed -= OnMove;
+        moveAction.canceled  -= OnMoveCanceled;
+        
+        jumpAction.performed -= OnJump;
+    }
+    
+    
+    private void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (!isOnGround) return;
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+        anim.SetBool("isJumping", true);
     }
 
-    private void JumpAction()
+
+    
+    private void OnMove(InputAction.CallbackContext ctx)
+    {
+        moveInput = ctx.ReadValue<Vector2>();
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    {
+        moveInput = Vector2.zero;
+    }
+
+
+
+    /*private void JumpAction()
     {
         if (isOnGround)
         {
@@ -70,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
         /* rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); */
 
-    }
+    //}
 
     private void FlipCharacter()
     {
@@ -97,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
     {
         /* transform.position += new Vector3(moveInput.x * movSpeed * Time.deltaTime, 0, 0); */
         rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
+        anim.SetBool("move", true);
     }
 
     void Update()
@@ -106,8 +140,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
-        MoveAction();
-        /*         JumpAction(); */
+    {    
+        rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
+
+        anim.SetBool("move", Mathf.Abs(moveInput.x) > 0.01f);
+
     }
 }

@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ecc5337-2b02-4627-b92b-ef2951940d56" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
+    <list default="true" id="8ecc5337-2b02-4627-b92b-ef2951940d56" name="Changes" comment="aggiunto physics material e aggiustato playermask, movement">
+      <change afterPath="$PROJECT_DIR$/Assets/ZeroFriction.physicsMaterial2D" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ZeroFriction.physicsMaterial2D.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnMasked/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnMasked/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Player/blacknwhite_3.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player/blacknwhite_3.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Player/walk.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player/walk.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerMask.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerMovement.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +40,9 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://D:/UnityProjects/UnMasked/Assets/Player/blacknwhite_3.controller" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityProjects/UnMasked/Assets/Player/blacknwhite_3.controller" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/UnityProjects/UnMasked/Assets/Scenes/level1.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MaskMoveWithMouse.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap@28bd01071fd5/Editor/GridEditorUtility.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -114,7 +122,7 @@
       <option name="presentableId" value="Default" />
       <updated>1769856882050</updated>
       <workItem from="1769856884079" duration="8227000" />
-      <workItem from="1769869299367" duration="4907000" />
+      <workItem from="1769869299367" duration="11342000" />
     </task>
     <task id="LOCAL-00001" summary="modifica player, aggiunta prefab">
       <option name="closed" value="true" />
@@ -124,7 +132,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769867144943</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="agigunta di assets background e playerMask script">
+      <option name="closed" value="true" />
+      <created>1769875987190</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769875987190</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +169,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="modifica player collider, aggiunto prefab" />
     <MESSAGE value="modifica player, aggiunta prefab" />
-    <option name="LAST_COMMIT_MESSAGE" value="modifica player, aggiunta prefab" />
+    <MESSAGE value="agigunta di assets background e playerMask script" />
+    <MESSAGE value="aggiunto physics material e aggiustato playermask, movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="aggiunto physics material e aggiustato playermask, movement" />
   </component>
 </project>

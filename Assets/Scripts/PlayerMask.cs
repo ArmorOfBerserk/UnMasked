@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMask : MonoBehaviour
 {
     [SerializeField] private int timeout = 10;
-    [SerializeField] private GameObject mask;
+    [SerializeField] public GameObject mask;
     private PlayerInput _playerInput;
     private bool maskActive = false;
     
@@ -21,11 +21,11 @@ public class PlayerMask : MonoBehaviour
 
     void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
-        toggleMask = _playerInput.actions["Active/DeactiveMask"];
+        //_playerInput = GetComponent<PlayerInput>();
+        //toggleMask = _playerInput.actions["Active/DeactiveMask"];
     }
 
-    void OnEnable()
+    /*void OnEnable()
     {
         toggleMask.started += OnToggleMask;
     }
@@ -39,8 +39,16 @@ public class PlayerMask : MonoBehaviour
     {
         if (maskActive) return;
         StartCoroutine(ShowMask());
+    }*/
+
+    void Update()
+    {
+        if (Keyboard.current.mKey.wasPressedThisFrame && !maskActive)
+        {
+            StartCoroutine(ShowMask());
+        }
     }
-    
+
     private IEnumerator ShowMask()
     {
         maskActive = true;
