@@ -91,8 +91,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.tag == "DeathBox")
         {
-            /*  manager.Hurt(); */
-            Debug.Log("CIAO");
             transform.position = startPoint.position;
             transform.rotation = startPoint.rotation;
 
@@ -109,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        AnimateCharacter();
         FlipCharacter();
     }
 
@@ -124,14 +123,19 @@ public class PlayerMovement : MonoBehaviour
             wasInAir = false;
             anim.SetBool("isJumping", false);
         }
-
-
     }
 
     private void FlipCharacter()
     {
         if (Mathf.Abs(moveInput.x) > 0.1f)
             spriteRenderer.flipX = moveInput.x < 0;
+    }
+
+    private void AnimateCharacter()
+    {
+        anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
+        anim.SetBool("isJumping", !isOnGround);
+        anim.SetFloat("yVelocity", rb.linearVelocityY);
     }
 
     private void SpawnDust()
