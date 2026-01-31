@@ -10,7 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput playerInput;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    private float lastPosition;
+    
+    // Riferimento all'oggetto interagibile
+    private IInteractable currentInteractable;
 
     [Header("Variabili di movimento")]
     [SerializeField] float movSpeed;
@@ -24,14 +26,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     private bool isOnGround => groundCheck != null && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    private Coroutine currentShootCoroutine;
-
+    
     private Vector2 moveInput;
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        if(groundCheck != null)
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
     void Awake()
@@ -43,59 +45,88 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        // Movimento
         playerInput.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerInput.actions["Move"].canceled += ctx => moveInput = Vector3.zero;
+        
+        // Salto
         playerInput.actions["Jump"].performed += ctx => JumpAction();
-    }
 
+        // INTERAZIONE IMMEDIATA
+        // "performed" scatta al frame esatto della pressione
+        var interactAction = playerInput.actions.FindAction("Interact");
+        if (interactAction != null)
+        {
+            interactAction.performed += ctx => TryInteract();
+        }
+    }
 
     private void OnDisable()
     {
         playerInput.actions["Move"].performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
         playerInput.actions["Move"].canceled -= ctx => moveInput = Vector3.zero;
         playerInput.actions["Jump"].performed -= ctx => JumpAction();
+
+        var interactAction = playerInput.actions.FindAction("Interact");
+        if (interactAction != null)
+            interactAction.performed -= ctx => TryInteract();
+    }
+
+    private void TryInteract()
+    {
+        // Se c'è un oggetto nel raggio, interagisce subito
+        if (currentInteractable != null)
+        {
+            currentInteractable.Interact();
+        }
+    }
+
+    // Rilevamento collisioni per interazione
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
+            currentInteractable = interactable;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
+            if (currentInteractable == interactable)
+            {
+                currentInteractable = null;
+                // Chiude la finestra se ti allontani
+                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen)
+                    InteractionUI.Instance.CloseWindow();
+            }
+        }
     }
 
     private void JumpAction()
     {
         if (isOnGround)
         {
-            Debug.Log("ciaooo");
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-
         }
-        /*         anim.SetBool("isJumping", !isOnGround);
-                anim.SetFloat("yVelocity", rb.linearVelocityY); */
-
-
-        /* rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); */
-
     }
 
     private void FlipCharacter()
     {
         if (moveInput.x > 0.1f)
-        {
             spriteRenderer.flipX = false;
-        }
         else if (moveInput.x < -0.1f)
-        {
             spriteRenderer.flipX = true;
-
-        }
-
     }
 
     private void AnimateCharacter()
     {
-        /*         anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
-                anim.SetBool("isJumping", !isOnGround);
-                anim.SetFloat("yVelocity", rb.linearVelocityY); */
+        // Logica animazione qui
     }
 
     private void MoveAction()
     {
-        /* transform.position += new Vector3(moveInput.x * movSpeed * Time.deltaTime, 0, 0); */
         rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
     }
 
@@ -108,6 +139,5 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         MoveAction();
-        /*         JumpAction(); */
     }
 }
