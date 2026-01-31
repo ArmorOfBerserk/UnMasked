@@ -10,7 +10,9 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput playerInput;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    private float lastPosition;
+    
+    // Riferimento all'oggetto interagibile
+    private IInteractable currentInteractable;
 
     [Header("Variabili di movimento")]
     [SerializeField] float movSpeed;
@@ -28,14 +30,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     private bool isOnGround => groundCheck != null && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    private Coroutine currentShootCoroutine;
-
+    
     private Vector2 moveInput;
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        if(groundCheck != null)
+            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
     void Awake()
@@ -75,6 +77,14 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isJumping", true);
     }
 
+        // INTERAZIONE IMMEDIATA
+        // "performed" scatta al frame esatto della pressione
+        var interactAction = playerInput.actions.FindAction("Interact");
+        if (interactAction != null)
+        {
+            interactAction.performed += ctx => TryInteract();
+        }
+    }
 
     
     private void OnMove(InputAction.CallbackContext ctx)
@@ -91,44 +101,53 @@ public class PlayerMovement : MonoBehaviour
 
     /*private void JumpAction()
     {
-        if (isOnGround)
+        // Se c'è un oggetto nel raggio, interagisce subito
+        if (currentInteractable != null)
         {
-            Debug.Log("ciaooo");
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-
+            currentInteractable.Interact();
         }
-        /*         anim.SetBool("isJumping", !isOnGround);
-                anim.SetFloat("yVelocity", rb.linearVelocityY); */
+    }
 
+    // Rilevamento collisioni per interazione
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
+            currentInteractable = interactable;
+        }
+    }
 
-        /* rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); */
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
+            if (currentInteractable == interactable)
+            {
+                currentInteractable = null;
+                // Chiude la finestra se ti allontani
+                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen)
+                    InteractionUI.Instance.CloseWindow();
+            }
+        }
+    }
 
     //}
 
     private void FlipCharacter()
     {
         if (moveInput.x > 0.1f)
-        {
             spriteRenderer.flipX = false;
-        }
         else if (moveInput.x < -0.1f)
-        {
             spriteRenderer.flipX = true;
-
-        }
-
     }
 
     private void AnimateCharacter()
     {
-        /*         anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
-                anim.SetBool("isJumping", !isOnGround);
-                anim.SetFloat("yVelocity", rb.linearVelocityY); */
+        // Logica animazione qui
     }
 
     private void MoveAction()
     {
-        /* transform.position += new Vector3(moveInput.x * movSpeed * Time.deltaTime, 0, 0); */
         rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
         anim.SetBool("move", true);
     }
