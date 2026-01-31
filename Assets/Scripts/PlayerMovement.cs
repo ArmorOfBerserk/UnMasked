@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,15 +12,19 @@ public class PlayerMovement : MonoBehaviour
     private IInteractable currentInteractable;
 
     [Header("Variabili di movimento")]
-    [SerializeField] float movSpeed;
-    [SerializeField] float jumpForce;
+    [SerializeField] float movSpeed = 8f;
+    [SerializeField] float jumpForce = 12f;
 
     [SerializeField] private Rigidbody2D rb;
 
     [Header("GroundCheck")]
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
+
+    // STATO GRAVITA'
+    private float defaultGravityScale;
+    private bool isGravityInverted = false;
 
     private bool isOnGround => groundCheck != null && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     
@@ -41,23 +42,34 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        
+        // Salviamo la gravità originale all'avvio (es. 1 o 3)
+        defaultGravityScale = rb.gravityScale;
     }
 
     private void OnEnable()
     {
-        // Movimento
+        // 1. MOVIMENTO
         playerInput.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerInput.actions["Move"].canceled += ctx => moveInput = Vector3.zero;
         
-        // Salto
+        // 2. SALTO
         playerInput.actions["Jump"].performed += ctx => JumpAction();
 
-        // INTERAZIONE IMMEDIATA
-        // "performed" scatta al frame esatto della pressione
+        // 3. INTERAZIONE (NPC/Cartelli)
         var interactAction = playerInput.actions.FindAction("Interact");
-        if (interactAction != null)
+        if (interactAction != null) interactAction.performed += ctx => TryInteract();
+
+        // 4. NUOVA AZIONE: GRAVITA'
+        // Assicurati che nell'Input System si chiami esattamente "gravityMask"
+        var gravityAction = playerInput.actions.FindAction("gravityMask");
+        if (gravityAction != null)
         {
-            interactAction.performed += ctx => TryInteract();
+            gravityAction.performed += ctx => ToggleGravity();
+        }
+        else
+        {
+            Debug.LogError("Non trovo l'azione 'gravityMask'! Controlla il file .inputactions");
         }
     }
 
@@ -68,61 +80,90 @@ public class PlayerMovement : MonoBehaviour
         playerInput.actions["Jump"].performed -= ctx => JumpAction();
 
         var interactAction = playerInput.actions.FindAction("Interact");
-        if (interactAction != null)
-            interactAction.performed -= ctx => TryInteract();
+        if (interactAction != null) interactAction.performed -= ctx => TryInteract();
+
+        var gravityAction = playerInput.actions.FindAction("gravityMask");
+        if (gravityAction != null) gravityAction.performed -= ctx => ToggleGravity();
     }
 
-    private void TryInteract()
+    // --- LOGICA GRAVITA' ---
+    private void ToggleGravity()
     {
-        // Se c'è un oggetto nel raggio, interagisce subito
-        if (currentInteractable != null)
-        {
-            currentInteractable.Interact();
-        }
-    }
+        isGravityInverted = !isGravityInverted;
 
-    // Rilevamento collisioni per interazione
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IInteractable interactable))
-        {
-            currentInteractable = interactable;
-        }
-    }
+        // 1. Inverti la fisica
+        // Se invertita diventa negativa, altrimenti torna al default positivo
+        rb.gravityScale = isGravityInverted ? -defaultGravityScale : defaultGravityScale;
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IInteractable interactable))
-        {
-            if (currentInteractable == interactable)
-            {
-                currentInteractable = null;
-                // Chiude la finestra se ti allontani
-                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen)
-                    InteractionUI.Instance.CloseWindow();
-            }
-        }
+        // 2. Capovolgi visivamente il personaggio (Flip Y)
+        // Manteniamo la scala X attuale (che gestisce la direzione destra/sinistra)
+        float currentScaleX = transform.localScale.x;
+        
+        // Impostiamo Y a -1 (testa in giù) o 1 (normale)
+        // Questo sposta automaticamente anche il GroundCheck che è figlio del player!
+        transform.localScale = new Vector3(currentScaleX, isGravityInverted ? -1 : 1, 1);
+
+        // Opzionale: Azzera la velocità verticale per evitare inerzie strane durante lo switch
+        // rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
     }
 
     private void JumpAction()
     {
         if (isOnGround)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            // Se la gravità è invertita (siamo sul soffitto), dobbiamo spingere verso il basso (negativo)
+            // Se è normale, spingiamo verso l'alto (positivo)
+            float jumpDirection = isGravityInverted ? -1f : 1f;
+            
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * jumpDirection);
         }
     }
 
     private void FlipCharacter()
     {
+        // Gestione direzione Destra/Sinistra
+        // Usiamo Mathf.Abs per essere sicuri di prendere il valore positivo della scala
+        // e poi lo moltiplichiamo per 1 o -1 a seconda della direzione
+        
         if (moveInput.x > 0.1f)
-            spriteRenderer.flipX = false;
+        {
+            // Guarda a destra: X positiva
+            Vector3 s = transform.localScale;
+            s.x = Mathf.Abs(s.x); 
+            transform.localScale = s;
+        }
         else if (moveInput.x < -0.1f)
-            spriteRenderer.flipX = true;
+        {
+            // Guarda a sinistra: X negativa
+            Vector3 s = transform.localScale;
+            s.x = -Mathf.Abs(s.x);
+            transform.localScale = s;
+        }
+        
+        // NOTA: Ho cambiato il sistema di Flip rispetto a prima. 
+        // Invece di usare spriteRenderer.flipX, uso la Scala X negativa.
+        // Questo è necessario perché stiamo già manipolando la Scala Y per la gravità
+        // e mescolare spriteRenderer.flipX con transform.scale.y negativo può creare bug visivi.
     }
 
-    private void AnimateCharacter()
+    // ... Interazioni e Aggiornamenti ...
+    private void TryInteract()
     {
-        // Logica animazione qui
+        if (currentInteractable != null) currentInteractable.Interact();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable)) currentInteractable = interactable;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
+            if (currentInteractable == interactable) currentInteractable = null;
+            if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen) InteractionUI.Instance.CloseWindow();
+        }
     }
 
     private void MoveAction()
@@ -133,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         FlipCharacter();
-        AnimateCharacter();
+        // AnimateCharacter();
     }
 
     void FixedUpdate()
