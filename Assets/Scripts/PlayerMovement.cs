@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Variabili di movimento")]
     [SerializeField] float movSpeed;
     [SerializeField] float jumpForce;
+    private InputAction moveAction;
+    private InputAction jumpAction;
+
+
 
     [SerializeField] private Rigidbody2D rb;
 
@@ -41,16 +45,37 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        
+        moveAction = playerInput.actions["Move"];
+        jumpAction = playerInput.actions["Jump"];
+
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
-        // Movimento
-        playerInput.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        playerInput.actions["Move"].canceled += ctx => moveInput = Vector3.zero;
+        moveAction.performed += OnMove;
+        moveAction.canceled  += OnMoveCanceled;
         
-        // Salto
-        playerInput.actions["Jump"].performed += ctx => JumpAction();
+        jumpAction.performed += OnJump;
+    }
+
+    void OnDisable()
+    {
+        moveAction.performed -= OnMove;
+        moveAction.canceled  -= OnMoveCanceled;
+        
+        jumpAction.performed -= OnJump;
+    }
+    
+    
+    private void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (!isOnGround) return;
+
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+        anim.SetBool("isJumping", true);
+    }
 
         // INTERAZIONE IMMEDIATA
         // "performed" scatta al frame esatto della pressione
@@ -61,18 +86,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    
+    private void OnMove(InputAction.CallbackContext ctx)
     {
-        playerInput.actions["Move"].performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
-        playerInput.actions["Move"].canceled -= ctx => moveInput = Vector3.zero;
-        playerInput.actions["Jump"].performed -= ctx => JumpAction();
-
-        var interactAction = playerInput.actions.FindAction("Interact");
-        if (interactAction != null)
-            interactAction.performed -= ctx => TryInteract();
+        moveInput = ctx.ReadValue<Vector2>();
     }
 
-    private void TryInteract()
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    {
+        moveInput = Vector2.zero;
+    }
+
+
+
+    /*private void JumpAction()
     {
         // Se c'è un oggetto nel raggio, interagisce subito
         if (currentInteractable != null)
@@ -104,13 +131,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void JumpAction()
-    {
-        if (isOnGround)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-        }
-    }
+    //}
 
     private void FlipCharacter()
     {
@@ -128,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
     private void MoveAction()
     {
         rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
+        anim.SetBool("move", true);
     }
 
     void Update()
@@ -137,7 +159,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
-        MoveAction();
+    {    
+        rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
+
+        anim.SetBool("move", Mathf.Abs(moveInput.x) > 0.01f);
+
     }
 }
