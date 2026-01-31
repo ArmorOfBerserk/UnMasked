@@ -244,11 +244,8 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-
-
-
-m_GameObject: {fileID: 199044566}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 199044566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -256,10 +253,10 @@ m_GameObject: {fileID: 199044566}
   - {fileID: 1185388912}
   m_Father: {fileID: 1536141106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.25, y: 0}
-  m_AnchorMax: {x: 0.75, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 0, y: -20}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &308699695
 GameObject:
@@ -2412,6 +2409,18 @@ PrefabInstance:
       propertyPath: mask
       value: 
       objectReference: {fileID: 645696654}
+    - target: {fileID: 2717725461909096197, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: dustPrefab
+      value: 
+      objectReference: {fileID: 8792670124234565536, guid: a913d625c964f6d45a564dc5db1df6f8, type: 3}
+    - target: {fileID: 2717725461909096197, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: fastFallThreshold
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339016025646149399, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.573
+      objectReference: {fileID: 0}
     - target: {fileID: 5502481585085032322, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24.95
