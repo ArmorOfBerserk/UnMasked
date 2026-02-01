@@ -5,39 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ecc5337-2b02-4627-b92b-ef2951940d56" name="Changes" comment="partite da qui">
-      <change afterPath="$PROJECT_DIR$/Assets/Audio.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/Ruined_Place.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/Ruined_Place.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/one tree forest.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/one tree forest.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/otherworld.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/otherworld.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/samsara.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/samsara.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/sky-lines.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/sky-lines.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/storm-night.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/storm-night.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/tiny-rpg-town.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/tiny-rpg-town.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/top-down-fantasy-1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Audio/Music/top-down-fantasy-1.ogg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Image.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Mixer.mixer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Mixer.mixer.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MusicPlaylist.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MusicPlaylist.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerAudio.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerAudio.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RaccoltaChiave.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RaccoltaChiave.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UnMasked/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnMasked/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/level1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/level1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tilesets/Ground/Ground.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Tilesets/Ground/Ground.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tilesets/dunjo_cover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Tilesets/dunjo_cover.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RaccoltaChiave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RaccoltaChiave.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,8 +40,8 @@
     <setting file="mock://D:/UnityProjects/UnMasked/Assets/Player/blacknwhite_3.controller" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/UnityProjects/UnMasked/Assets/Scenes/level1.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/UnityProjects/UnMasked/Assets/Scenes/level1.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CheckPorta.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MaskMoveWithMouse.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerRespawn.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap@28bd01071fd5/Editor/GridEditorUtility.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -149,7 +120,9 @@
       <option name="presentableId" value="Default" />
       <updated>1769856882050</updated>
       <workItem from="1769856884079" duration="8227000" />
-      <workItem from="1769869299367" duration="15603000" />
+      <workItem from="1769869299367" duration="18482000" />
+      <workItem from="1769898543366" duration="286000" />
+      <workItem from="1769903723550" duration="1078000" />
     </task>
     <task id="LOCAL-00001" summary="modifica player, aggiunta prefab">
       <option name="closed" value="true" />
@@ -175,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769884257118</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="partite da qui">
+      <option name="closed" value="true" />
+      <created>1769895212687</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1769895212687</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

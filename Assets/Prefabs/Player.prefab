@@ -17,10 +17,10 @@ GameObject:
   - component: {fileID: 5368986123561903538}
   - component: {fileID: -2420528147396263830}
   - component: {fileID: 535259895033438540}
-  - component: {fileID: 5490789551401348755}
+  - component: {fileID: 7120477163127595288}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -358,19 +358,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5490789551401348755
+--- !u!114 &7120477163127595288
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1597854497744037217, guid: 02ec3258b487af044b74975cc5db3cad, type: 3}
-  m_PrefabInstance: {fileID: 2740458145877904454}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6427789888178046418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3c4da3c174d35a4babc5c3dc6400b12, type: 3}
+  m_Script: {fileID: 11500000, guid: 57425105aeacc584b9e8a860a1545469, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MaskManager
-  maskOnColor: {r: 1, g: 1, b: 1, a: 0.5}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &8477854825800736213
 GameObject:
   m_ObjectHideFlags: 0
