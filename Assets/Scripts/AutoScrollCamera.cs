@@ -5,7 +5,7 @@ public class AutoScrollCamera : MonoBehaviour
     public static AutoScrollCamera Instance { get; private set; }
 
     [Header("Settings")]
-    public float scrollSpeed = 3.4f; 
+    public float scrollSpeed = 2.8f; 
     public bool isScrolling = false;
     public Transform playerTransform; 
     
