@@ -43,7 +43,7 @@ public class MaskMoveWithMouse : MonoBehaviour
     }
 
 
-//Genera un po' di "mal di mare"
+
     private void HandleMovement()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
@@ -106,5 +106,6 @@ public class MaskMoveWithMouse : MonoBehaviour
         Vector3 newScale = new Vector3(originalScale.x, y, originalScale.z);
         eyeDx.localScale = newScale;
         eyeSx.localScale = newScale;
+     
     }
 }
