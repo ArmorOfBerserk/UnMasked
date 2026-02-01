@@ -3809,6 +3809,10 @@ PrefabInstance:
       propertyPath: oggettoScuro
       value: 
       objectReference: {fileID: 840143482}
+    - target: {fileID: 8254286832320676526, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 366dc588096211444a0905283ca199fd, type: 2}
     - target: {fileID: 8695509091238939082, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       propertyPath: m_Name
       value: Player

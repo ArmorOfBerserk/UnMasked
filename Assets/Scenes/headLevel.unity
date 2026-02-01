@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &74916375 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4339016025646149399, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
-  m_PrefabInstance: {fileID: 804347335}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &149358125
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,100 +593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b40f5f337b50042a1c4dee6edbefcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
---- !u!1 &343324452 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6427789888178046418, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
-  m_PrefabInstance: {fileID: 804347335}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &343324461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343324452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49dd02f243c7a1d479d71eb09189ee78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudio
-  audioPassi: {fileID: 8300000, guid: cbcca96d895fc69499e2efdb6cc27a4c, type: 3}
-  audioSalto: {fileID: 8300000, guid: f0adffd0684a75440b33a19bee065c69, type: 3}
-  volumePassi: 0.15
---- !u!114 &343324462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343324452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc3a1c526cce9141a8a024ee0561823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HeadTrackingReceiver
-  executableName: eyetracking.exe
-  startServerOnPlay: 1
-  showConsoleWindow: 0
-  port: 5065
-  objectToMove: {fileID: 645696656}
-  cameraTransform: {fileID: 0}
-  distanceFromCamera: 50
-  screenCenterOffset: {x: 5, y: 0}
-  recenterKey: 17
-  sensitivity: {x: 60, y: 60}
-  movementLimits: {x: 8.5, y: 8}
-  smoothTime: 0.05
-  invertX: 0
-  invertY: 1
---- !u!114 &343324474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343324452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396e1f93a0d73e64f872c6cc8f2ecea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementBis
-  movSpeed: 6
-  jumpForce: 6.5
-  groundCheck: {fileID: 74916375}
-  groundCheckRadius: 0.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  dustPrefab: {fileID: 0}
-  fastFallThreshold: 0
-  startPoint: {fileID: 149358126}
-  stepSounds:
-  - {fileID: 8300000, guid: cbcca96d895fc69499e2efdb6cc27a4c, type: 3}
-  deathSound: {fileID: 8300000, guid: ebc10cdc865fd9248807c908853a72f6, type: 3}
-  stepRate: 0.3
-  maskUI: {fileID: 0}
-  hideMask: {fileID: 0}
-  canMove: 1
---- !u!114 &343324475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343324452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5929eca7a06413f4a830643bd21dd1b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMaskBis
-  mask: {fileID: 645696654}
-  maskSlider: {fileID: 0}
-  dxEye: {fileID: 808010659}
-  sxEye: {fileID: 2111275307}
-  blinkDuration: 0.1
-  blinkInterval: 4
-  closedScaleY: 0.05
 --- !u!1 &356788379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,10 +2433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4090465e81e4c84eb5407efe6659fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelsManager
-  levelScenes:
-  - level1
-  - level2
-  - level3
+  levelStartPositions: []
+  mainCamera: {fileID: 0}
 --- !u!4 &524291827
 Transform:
   m_ObjectHideFlags: 0
@@ -3034,6 +2933,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.75
       objectReference: {fileID: 0}
+    - target: {fileID: 6172228051573759944, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: startPoint
+      value: 
+      objectReference: {fileID: 149358126}
     - target: {fileID: 6427789888178046418, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3065,22 +2968,104 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2717725461909096197, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
     - {fileID: -2420528147396263830, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+    - {fileID: 7724427238420985347, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+    - {fileID: 6172228051573759944, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6427789888178046418, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 8695509091238939082, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 343324461}
-    - targetCorrespondingSourceObject: {fileID: 6427789888178046418, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      addedObject: {fileID: 804347340}
+    - targetCorrespondingSourceObject: {fileID: 8695509091238939082, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 343324462}
-    - targetCorrespondingSourceObject: {fileID: 6427789888178046418, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      addedObject: {fileID: 804347339}
+    - targetCorrespondingSourceObject: {fileID: 8695509091238939082, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 343324474}
-    - targetCorrespondingSourceObject: {fileID: 6427789888178046418, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 343324475}
+      addedObject: {fileID: 804347338}
   m_SourcePrefab: {fileID: 100100000, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+--- !u!1 &804347336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8695509091238939082, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+  m_PrefabInstance: {fileID: 804347335}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &804347337 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3881173009324683539, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+  m_PrefabInstance: {fileID: 804347335}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &804347338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804347336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc3a1c526cce9141a8a024ee0561823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeadTrackingReceiver
+  executableName: eyetracking.exe
+  startServerOnPlay: 1
+  showConsoleWindow: 0
+  port: 5065
+  objectToMove: {fileID: 645696656}
+  cameraTransform: {fileID: 0}
+  distanceFromCamera: 50
+  screenCenterOffset: {x: 5, y: 0}
+  recenterKey: 17
+  sensitivity: {x: 60, y: 60}
+  movementLimits: {x: 8.5, y: 8}
+  smoothTime: 0.05
+  invertX: 0
+  invertY: 1
+--- !u!114 &804347339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804347336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396e1f93a0d73e64f872c6cc8f2ecea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementBis
+  movSpeed: 6
+  jumpForce: 6.5
+  groundCheck: {fileID: 804347337}
+  groundCheckRadius: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  dustPrefab: {fileID: 8792670124234565536, guid: a913d625c964f6d45a564dc5db1df6f8, type: 3}
+  fastFallThreshold: -10
+  startPoint: {fileID: 149358126}
+  stepSounds: []
+  deathSound: {fileID: 8300000, guid: 3460fced961d88e4a9dacf025d1eb18a, type: 3}
+  stepRate: 0.3
+  maskUI: {fileID: 0}
+  hideMask: {fileID: 0}
+  canMove: 1
+--- !u!114 &804347340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804347336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5929eca7a06413f4a830643bd21dd1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMaskBis
+  mask: {fileID: 645696654}
+  maskSlider: {fileID: 0}
+  dxEye: {fileID: 808010659}
+  sxEye: {fileID: 2111275307}
+  blinkDuration: 0.1
+  blinkInterval: 4
+  closedScaleY: 0.05
 --- !u!1 &808010659
 GameObject:
   m_ObjectHideFlags: 0
@@ -15581,7 +15566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2072175593
 RectTransform:
   m_ObjectHideFlags: 0
