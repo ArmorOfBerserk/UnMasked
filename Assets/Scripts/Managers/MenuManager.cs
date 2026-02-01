@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,11 +43,21 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("level1");
     }
-
-    public void GoToLevel()
+    
+    public void ChangeSceneExperimental()
     {
-        Debug.Log("ciaooo");
+        SceneManager.LoadScene("headLevel");
+    }
+
+    public void GoToLevel(string level)
+    {
         fadeIn.SetActive(true);
         Invoke("ChangeScene", 2f);
+    }
+
+    public void GoToExperimentalLevel()
+    {
+        fadeIn.SetActive(true);
+        Invoke("ChangeSceneExperimental", 2f);
     }
 }
