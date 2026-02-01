@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: f5fae8494b172a943a9b6ecb5a4c229f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6563084852444076711
+    second: Livello 1_0
+  - first:
+      213: 2100386962984812112
+    second: Livello 1_1
+  - first:
+      213: 4639395172444462102
+    second: Livello 1_2
+  - first:
+      213: -3513120313689172118
+    second: Livello 1_3
+  - first:
+      213: 2208569005195180713
+    second: Livello 1_4
+  - first:
+      213: 836226176273247682
+    second: Livello 1_5
+  - first:
+      213: 8196001465473825239
+    second: Livello 1_6
+  - first:
+      213: 6487101064332674821
+    second: Livello 1_7
+  - first:
+      213: -8046288337176902957
+    second: Livello 1_8
+  - first:
+      213: 7756468480115777332
+    second: Livello 1_9
+  - first:
+      213: 4086020225581303770
+    second: Livello 1_10
+  - first:
+      213: 8653806820740358743
+    second: Livello 1_11
+  - first:
+      213: -6724818268547305084
+    second: Livello 1_12
+  - first:
+      213: 3932844751671556008
+    second: Livello 1_13
+  - first:
+      213: -3423209548377197347
+    second: Livello 1_14
+  - first:
+      213: -391939722086695325
+    second: Livello 1_15
+  - first:
+      213: -7269845797335886718
+    second: Livello 1_16
+  - first:
+      213: 7235508628200540427
+    second: Livello 1_17
+  - first:
+      213: 5249243785502911619
+    second: Livello 1_18
+  - first:
+      213: 3022723566052716607
+    second: Livello 1_19
+  - first:
+      213: 9033135241412852075
+    second: Livello 1_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Livello 1_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 74
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 955e253791d3be4a0800000000000000
+      internalID: -6563084852444076711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_1
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 74
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05e329380d2162d10800000000000000
+      internalID: 2100386962984812112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_2
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 74
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61cd63a2451726040800000000000000
+      internalID: 4639395172444462102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_3
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 74
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a67195120b3ee3fc0800000000000000
+      internalID: -3513120313689172118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_4
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 74
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aab8980fc966ae10800000000000000
+      internalID: 2208569005195180713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_5
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 48
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cd66acd64fda9b00800000000000000
+      internalID: 836226176273247682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_6
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 48
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d9f52898eb0eb170800000000000000
+      internalID: 8196001465473825239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_7
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 49
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5078b914c00d60a50800000000000000
+      internalID: 6487101064332674821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_8
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 49
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d2c33e6367d55090800000000000000
+      internalID: -8046288337176902957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_9
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 24
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43f90d4bcf284ab60800000000000000
+      internalID: 7756468480115777332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_10
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 24
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad7c5da1fb574b830800000000000000
+      internalID: 4086020225581303770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_11
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 24
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 752e411247f781870800000000000000
+      internalID: 8653806820740358743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_12
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 24
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4813e241a65aca2a0800000000000000
+      internalID: -6724818268547305084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_13
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 24
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a7742ce675449630800000000000000
+      internalID: 3932844751671556008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 12
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd4704d7d015e70d0800000000000000
+      internalID: -3423209548377197347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_15
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36e38ab36ec8f8af0800000000000000
+      internalID: -391939722086695325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_16
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 1
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2849dedb3c15c1b90800000000000000
+      internalID: -7269845797335886718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_17
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 0
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09ca2113c0b96460800000000000000
+      internalID: 7235508628200540427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_18
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ce356496f09d840800000000000000
+      internalID: 5249243785502911619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_19
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 1
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3036c8711fd2f920800000000000000
+      internalID: 3022723566052716607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Livello 1_20
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 1
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b69b97874a42c5d70800000000000000
+      internalID: 9033135241412852075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Livello 1_0: -6563084852444076711
+      Livello 1_1: 2100386962984812112
+      Livello 1_10: 4086020225581303770
+      Livello 1_11: 8653806820740358743
+      Livello 1_12: -6724818268547305084
+      Livello 1_13: 3932844751671556008
+      Livello 1_14: -3423209548377197347
+      Livello 1_15: -391939722086695325
+      Livello 1_16: -7269845797335886718
+      Livello 1_17: 7235508628200540427
+      Livello 1_18: 5249243785502911619
+      Livello 1_19: 3022723566052716607
+      Livello 1_2: 4639395172444462102
+      Livello 1_20: 9033135241412852075
+      Livello 1_3: -3513120313689172118
+      Livello 1_4: 2208569005195180713
+      Livello 1_5: 836226176273247682
+      Livello 1_6: 8196001465473825239
+      Livello 1_7: 6487101064332674821
+      Livello 1_8: -8046288337176902957
+      Livello 1_9: 7756468480115777332
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
