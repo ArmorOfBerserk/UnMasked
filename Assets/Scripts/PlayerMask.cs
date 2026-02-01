@@ -23,6 +23,8 @@ public class PlayerMask : MonoBehaviour
     [SerializeField] private GameObject dxEye;
     [SerializeField] private GameObject sxEye;
 
+    public GameObject oggettoScuro;
+
     private Coroutine maskCoroutine;
     private float currentTime;
     private MaskState state = MaskState.Idle;
@@ -78,6 +80,7 @@ public class PlayerMask : MonoBehaviour
 
     private void StartMask()
     {
+        oggettoScuro.SetActive(true);
         state = MaskState.Running;
         currentTime = timeout;
 
@@ -95,6 +98,7 @@ public class PlayerMask : MonoBehaviour
 
     private void PauseMask()
     {
+        oggettoScuro.SetActive(false);
         EventMessageManager.StopUsingMask();
         state = MaskState.Paused;
         SetEyesVisible(false);
@@ -102,12 +106,14 @@ public class PlayerMask : MonoBehaviour
 
     private void ResumeMask()
     {
+        oggettoScuro.SetActive(true);
         state = MaskState.Running;
         SetEyesVisible(true);
     }
 
     private void FinishMask()
     {
+        oggettoScuro.SetActive(false);
         state = MaskState.Finished;
 
         EventMessageManager.StopUsingMask();
@@ -125,6 +131,7 @@ public class PlayerMask : MonoBehaviour
     private void ResetMask()
     {
 
+        oggettoScuro.SetActive(false);
         state = MaskState.Idle;
         currentTime = timeout;
 

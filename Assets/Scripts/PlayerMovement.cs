@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
-        if (isOnGround)
+        if (isOnGround && canMove)
         {
             // Se gravità invertita, saltiamo verso il basso (-1), altrimenti verso l'alto (1)
             float jumpDirection = isGravityInverted ? -1f : 1f;
