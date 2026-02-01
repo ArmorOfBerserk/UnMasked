@@ -1,184 +1,289 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // --- COMPONENTI ---
     private PlayerInput playerInput;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    
-    // Riferimento all'oggetto interagibile
+    private Rigidbody2D rb;
+
+    // --- INTERAZIONE ---
     private IInteractable currentInteractable;
+
+    // --- INPUT ACTIONS ---
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction interactAction;
+    private InputAction gravityAction;
 
     [Header("Variabili di movimento")]
     [SerializeField] float movSpeed = 8f;
     [SerializeField] float jumpForce = 12f;
 
-    [SerializeField] private Rigidbody2D rb;
-
     [Header("GroundCheck")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
+    private bool isOnGround => groundCheck != null && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
-    // STATO GRAVITA'
+    [Header("Sistema Gravità")]
     private float defaultGravityScale;
     private bool isGravityInverted = false;
 
-    private bool isOnGround => groundCheck != null && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    
-    private Vector2 moveInput;
+    [Header("Effetti & Respawn")]
+    [SerializeField] private GameObject dustPrefab;     // Particelle atterraggio
+    [SerializeField] private float fastFallThreshold = -10f; // Soglia velocità per polvere
+    public Transform startPoint;
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        if(groundCheck != null)
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    }
+    [Header("Maschera UI")]
+    [SerializeField] Slider maskUI;
+    [SerializeField] GameObject hideMask;
+
+    // --- STATO ---
+    private Vector2 moveInput;
+    private bool wasInAir;
+    public bool canMove = true;
 
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        
-        // Salviamo la gravità originale all'avvio (es. 1 o 3)
+        rb = GetComponent<Rigidbody2D>();
+
+        // Salviamo la gravità originale all'avvio
         defaultGravityScale = rb.gravityScale;
+
+        // Cache delle azioni per pulizia
+        moveAction = playerInput.actions["Move"];
+        jumpAction = playerInput.actions["Jump"];
+        interactAction = playerInput.actions["Interact"];
+
+        // Assicurati che l'azione esista nel tuo Input System
+        gravityAction = playerInput.actions.FindAction("gravityMask");
+        ResetPlayerStatsAndPosition();
     }
 
-    private void OnEnable()
+
+
+    void OnEnable()
     {
-        // 1. MOVIMENTO
-        playerInput.actions["Move"].performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        playerInput.actions["Move"].canceled += ctx => moveInput = Vector3.zero;
-        
-        // 2. SALTO
-        playerInput.actions["Jump"].performed += ctx => JumpAction();
+        moveAction.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        moveAction.canceled += ctx => moveInput = Vector2.zero;
+        EventMessageManager.OnLockPlayerMovement += () => canMove = true;
 
-        // 3. INTERAZIONE (NPC/Cartelli)
-        var interactAction = playerInput.actions.FindAction("Interact");
-        if (interactAction != null) interactAction.performed += ctx => TryInteract();
+        jumpAction.performed += OnJump;
 
-        // 4. NUOVA AZIONE: GRAVITA'
-        // Assicurati che nell'Input System si chiami esattamente "gravityMask"
-        var gravityAction = playerInput.actions.FindAction("gravityMask");
-        if (gravityAction != null)
+        if (interactAction != null) interactAction.performed += OnInteractTriggered;
+        if (gravityAction != null) gravityAction.performed += OnToggleGravity;
+    }
+
+    void OnDisable()
+    {
+        moveAction.performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
+        moveAction.canceled -= ctx => moveInput = Vector2.zero;
+
+        jumpAction.performed -= OnJump;
+
+        if (interactAction != null) interactAction.performed -= OnInteractTriggered;
+        if (gravityAction != null) gravityAction.performed -= OnToggleGravity;
+    }
+
+    // --- LOGICA MOVIMENTO & FISICA ---
+
+    void FixedUpdate()
+    {
+        if (!canMove)
+            return;
+
+        // Movimento orizzontale
+        rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
+
+        // Logica Polvere (Dust) all'atterraggio
+        CheckLandingDust();
+    }
+
+    void Update()
+    {
+        if (Keyboard.current.mKey.wasPressedThisFrame && isOnGround)
         {
-            gravityAction.performed += ctx => ToggleGravity();
+            EquipMask();
         }
-        else
+
+        AnimateCharacter();
+
+        if (!canMove)
+            return;
+
+        FlipCharacter();
+    }
+
+    void EquipMask()
+    {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
+        EventMessageManager.StartEquipMask();
+    }
+
+    private void CheckLandingDust()
+    {
+        // Se non siamo a terra, segniamo che siamo in aria
+        if (!isOnGround)
         {
-            Debug.LogError("Non trovo l'azione 'gravityMask'! Controlla il file .inputactions");
+            wasInAir = true;
+        }
+        // Se eravamo in aria e ora tocchiamo terra -> Atterraggio!
+        else if (wasInAir)
+        {
+            // Spawn particelle solo se cadevamo veloce (o se la gravità è invertita, se salivamo veloce)
+            float verticalSpeed = isGravityInverted ? -rb.linearVelocity.y : rb.linearVelocity.y;
+
+            if (verticalSpeed < fastFallThreshold)
+            {
+                SpawnDust();
+            }
+
+            wasInAir = false;
+            anim.SetBool("isJumping", false);
         }
     }
 
-    private void OnDisable()
+    // --- LOGICA SALTO ---
+
+    private void OnJump(InputAction.CallbackContext ctx)
     {
-        playerInput.actions["Move"].performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
-        playerInput.actions["Move"].canceled -= ctx => moveInput = Vector3.zero;
-        playerInput.actions["Jump"].performed -= ctx => JumpAction();
+        if (isOnGround && canMove)
+        {
+            // Se gravità invertita, saltiamo verso il basso (-1), altrimenti verso l'alto (1)
+            float jumpDirection = isGravityInverted ? -1f : 1f;
 
-        var interactAction = playerInput.actions.FindAction("Interact");
-        if (interactAction != null) interactAction.performed -= ctx => TryInteract();
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * jumpDirection);
 
-        var gravityAction = playerInput.actions.FindAction("gravityMask");
-        if (gravityAction != null) gravityAction.performed -= ctx => ToggleGravity();
+            anim.SetBool("isJumping", true);
+
+            // Opzionale: Dust anche quando salti
+            SpawnDust();
+        }
     }
 
     // --- LOGICA GRAVITA' ---
-    private void ToggleGravity()
+
+    private void OnToggleGravity(InputAction.CallbackContext ctx)
     {
         isGravityInverted = !isGravityInverted;
 
         // 1. Inverti la fisica
-        // Se invertita diventa negativa, altrimenti torna al default positivo
         rb.gravityScale = isGravityInverted ? -defaultGravityScale : defaultGravityScale;
 
         // 2. Capovolgi visivamente il personaggio (Flip Y)
-        // Manteniamo la scala X attuale (che gestisce la direzione destra/sinistra)
-        float currentScaleX = transform.localScale.x;
-        
-        // Impostiamo Y a -1 (testa in giù) o 1 (normale)
-        // Questo sposta automaticamente anche il GroundCheck che è figlio del player!
-        transform.localScale = new Vector3(currentScaleX, isGravityInverted ? -1 : 1, 1);
-
-        // Opzionale: Azzera la velocità verticale per evitare inerzie strane durante lo switch
-        // rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+        // Usiamo Scale invece di FlipY dello sprite per girare anche il GroundCheck!
+        FlipCharacter();
     }
 
-    private void JumpAction()
+    private void ResetGravity()
     {
-        if (isOnGround)
-        {
-            // Se la gravità è invertita (siamo sul soffitto), dobbiamo spingere verso il basso (negativo)
-            // Se è normale, spingiamo verso l'alto (positivo)
-            float jumpDirection = isGravityInverted ? -1f : 1f;
-            
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * jumpDirection);
-        }
+        // Utile quando si muore per resettare lo stato
+        isGravityInverted = false;
+        rb.gravityScale = defaultGravityScale;
+        FlipCharacter(); // Riapplica la scala corretta
     }
+
+    // --- LOGICA VISIVA (FLIP) ---
 
     private void FlipCharacter()
     {
-        // Gestione direzione Destra/Sinistra
-        // Usiamo Mathf.Abs per essere sicuri di prendere il valore positivo della scala
-        // e poi lo moltiplichiamo per 1 o -1 a seconda della direzione
-        
+        // Gestione Scala Y (Gravità)
+        float scaleY = isGravityInverted ? -1f : 1f;
+
+        // Gestione Scala X (Direzione)
+        // Manteniamo la X corrente ma ne forziamo il segno
+        float scaleX = transform.localScale.x;
+
         if (moveInput.x > 0.1f)
         {
-            // Guarda a destra: X positiva
-            Vector3 s = transform.localScale;
-            s.x = Mathf.Abs(s.x); 
-            transform.localScale = s;
+            scaleX = Mathf.Abs(scaleX); // Guarda a destra (Positivo)
         }
         else if (moveInput.x < -0.1f)
         {
-            // Guarda a sinistra: X negativa
-            Vector3 s = transform.localScale;
-            s.x = -Mathf.Abs(s.x);
-            transform.localScale = s;
+            scaleX = -Mathf.Abs(scaleX); // Guarda a sinistra (Negativo)
         }
-        
-        // NOTA: Ho cambiato il sistema di Flip rispetto a prima. 
-        // Invece di usare spriteRenderer.flipX, uso la Scala X negativa.
-        // Questo è necessario perché stiamo già manipolando la Scala Y per la gravità
-        // e mescolare spriteRenderer.flipX con transform.scale.y negativo può creare bug visivi.
+
+        // Applichiamo la trasformazione completa
+        transform.localScale = new Vector3(scaleX, scaleY, 1);
     }
 
-    // ... Interazioni e Aggiornamenti ...
-    private void TryInteract()
+    private void SpawnDust()
     {
-        if (currentInteractable != null) currentInteractable.Interact();
+        if (dustPrefab != null && groundCheck != null)
+        {
+            // Creiamo la polvere
+            GameObject dust = Instantiate(dustPrefab, groundCheck.position, Quaternion.identity);
+
+            // Se siamo a testa in giù, giriamo anche la polvere!
+            if (isGravityInverted)
+            {
+                dust.transform.localScale = new Vector3(1, -1, 1);
+            }
+        }
+    }
+
+    // --- INTERAZIONE & RESPAWN ---
+
+    private void OnInteractTriggered(InputAction.CallbackContext ctx)
+    {
+        if (currentInteractable != null)
+        {
+            currentInteractable.Interact();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IInteractable interactable)) currentInteractable = interactable;
+        // Interazione
+        if (collision.TryGetComponent(out IInteractable interactable))
+            currentInteractable = interactable;
+
+        // Morte / Respawn
+        if (collision.CompareTag("DeathBox"))
+        {
+            // Resetta la posizione
+            if (startPoint != null)
+            {
+                ResetPlayerStatsAndPosition();
+            }
+        }
+    }
+
+    private void ResetPlayerStatsAndPosition()
+    {
+        canMove = true;
+        transform.position = startPoint.position;
+        transform.rotation = startPoint.rotation;
+        EventMessageManager.ResetTimerMask();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IInteractable interactable))
         {
-            if (currentInteractable == interactable) currentInteractable = null;
-            if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen) InteractionUI.Instance.CloseWindow();
+            if (currentInteractable == interactable)
+            {
+                currentInteractable = null;
+                // Chiude l'UI se ti allontani
+                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen)
+                    InteractionUI.Instance.CloseWindow();
+            }
         }
     }
 
-    private void MoveAction()
+    private void AnimateCharacter()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
-    }
-
-    void Update()
-    {
-        FlipCharacter();
-        // AnimateCharacter();
-    }
-
-    void FixedUpdate()
-    {
-        MoveAction();
+        anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
+        anim.SetBool("isJumping", !isOnGround);
+        anim.SetFloat("yVelocity", rb.linearVelocityY);
+        anim.SetBool("isEquipMask", !canMove);
     }
 }

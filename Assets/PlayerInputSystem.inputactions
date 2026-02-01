@@ -90,7 +90,7 @@
                 {
                     "name": "GravityMask",
                     "type": "Button",
-                    "id": "94589a17-1415-4da0-a932-0f8d6b95b430",
+                    "id": "a95a23ff-924b-49e4-9fcf-181c500f8734",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -463,11 +463,11 @@
                 },
                 {
                     "name": "",
-                    "id": "d2489e00-99db-4ff2-9568-b7fb90ad42c0",
+                    "id": "a8282a50-cb2b-4749-a52e-5256a3405da0",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "",
                     "action": "GravityMask",
                     "isComposite": false,
                     "isPartOfComposite": false

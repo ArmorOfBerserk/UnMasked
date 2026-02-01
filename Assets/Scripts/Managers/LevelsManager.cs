@@ -1,62 +1,86 @@
-using UnityEditor.Build.Reporting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using Unity.Cinemachine;
 
 public class LevelsManager : MonoBehaviour
 {
     public static LevelsManager Instance;
-    
-    [Header("Level Info")]
-    public int currentLevel = 0;
-    public int totalLevels = 5;
-    
+
+    [Header("Punti Iniziali dei Livelli")]
+    public List<Transform> levelStartPositions = new List<Transform>();
+    private int currentLevelIndex = 0;
+    private Transform playerTransform;
+    [SerializeField] CinemachineCamera mainCamera;
+    private float addLevelFloat = 0.0f;
+
     void Awake()
     {
-        // Singleton - sopravvive tra scene
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-    
-    // Carica livello specifico
-    public void LoadLevel(int levelIndex)
+
+    void Start()
     {
-        currentLevel = levelIndex;
-        SceneManager.LoadScene("level" + levelIndex);
+        // Trova il player nella scena
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // Posiziona il player al primo livello
+        LoadLevelByIndex(currentLevelIndex);
     }
-    
-    // Prossimo livello
-    public void NextLevel()
+
+    // Carica un "livello" spostando il player
+    public void LoadLevelByIndex(int index)
     {
-        currentLevel++;
-        
-        if (currentLevel > totalLevels)
+        if (index >= 0 && index < levelStartPositions.Count)
         {
-            // Hai vinto!
-            SceneManager.LoadScene("GameOver");
+            currentLevelIndex = index;
+            if (playerTransform != null)
+            {
+                playerTransform.position = levelStartPositions[index].position;
+                mainCamera.transform.position = new Vector3(mainCamera.transform.position.x + addLevelFloat, mainCamera.transform.position.y, mainCamera.transform.position.z);
+                addLevelFloat += 30.0f;
+            }
+            else
+            {
+                Debug.LogError("Player non trovato in scena! Assicurati che abbia il tag 'Player'.");
+            }
         }
         else
         {
-            SceneManager.LoadScene("level" + currentLevel);
+            Debug.LogError("Indice livello non valido nella lista!");
         }
     }
-    
-    // Ricomincia livello corrente
+
+    // Passa al livello successivo nella scena
+    public void NextLevel()
+    {
+        currentLevelIndex++;
+        if (currentLevelIndex < levelStartPositions.Count)
+        {
+            LoadLevelByIndex(currentLevelIndex);
+        }
+        else
+        {
+            Debug.Log("Ultimo livello completato!");
+            // Puoi aggiungere qui un comportamento tipo "fine gioco" senza cambiare scena
+        }
+    }
+
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Ricarica lo stesso livello (reset posizione)
+        LoadLevelByIndex(currentLevelIndex);
     }
-    
-    // Torna al menu
+
     public void GoToMenu()
     {
-        currentLevel = 0;
-        SceneManager.LoadScene("MainMenu");
+        // Se vuoi simulare menu, puoi riposizionare il player a un punto "menu" o fare un comportamento custom
+        Debug.Log("Tornare al menu (implementa comportamento custom qui)");
     }
 }
