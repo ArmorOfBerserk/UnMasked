@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325ef601b33efbc45a701b671c04c340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TransitionManager
-  fadeImage: {fileID: 1600990878}
+  fadeImage: {fileID: 1888472578}
   fadeDuration: 0.5
 --- !u!114 &323416299
 MonoBehaviour:
@@ -1801,8 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4090465e81e4c84eb5407efe6659fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelsManager
-  currentLevel: 0
-  totalLevels: 3
+  levelScenes: []
 --- !u!4 &978437386
 Transform:
   m_ObjectHideFlags: 0
@@ -2459,6 +2458,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1888472578 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2504144410227982830, guid: d2f2000633712904a8a1c31f33e4fd6b, type: 3}
+  m_PrefabInstance: {fileID: 5074951893951075707}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &2111494833
 GameObject:
   m_ObjectHideFlags: 0

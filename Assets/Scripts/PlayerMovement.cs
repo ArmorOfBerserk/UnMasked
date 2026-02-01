@@ -220,20 +220,11 @@ public class PlayerMovement : MonoBehaviour
         // Morte / Respawn
         if (collision.CompareTag("DeathBox"))
         {
-            Debug.Log("Respawn!");
-
             // Resetta la posizione
             if (startPoint != null)
             {
                 transform.position = startPoint.position;
                 transform.rotation = startPoint.rotation;
-
-                // IMPORTANTE: Resetta la velocità per non conservare inerzia mortale
-
-
-                // OPZIONALE: Vuoi resettare la gravità quando muore? 
-                // Se sì, decommenta la riga sotto:
-                // ResetGravity(); 
             }
         }
     }
