@@ -1,149 +1,253 @@
-using System;
-using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // --- COMPONENTI ---
     private PlayerInput playerInput;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-    private float lastPosition;
+    private Rigidbody2D rb;
 
-    [Header("Variabili di movimento")]
-    [SerializeField] float movSpeed;
-    [SerializeField] float jumpForce;
+    // --- INTERAZIONE ---
+    private IInteractable currentInteractable;
+
+    // --- INPUT ACTIONS ---
     private InputAction moveAction;
     private InputAction jumpAction;
+    private InputAction interactAction;
+    private InputAction gravityAction;
 
-
-
-    [SerializeField] private Rigidbody2D rb;
+    [Header("Variabili di movimento")]
+    [SerializeField] float movSpeed = 8f;
+    [SerializeField] float jumpForce = 12f;
 
     [Header("GroundCheck")]
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRadius;
+    [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
-
     private bool isOnGround => groundCheck != null && Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-    private Coroutine currentShootCoroutine;
 
+    [Header("Sistema Gravità")]
+    private float defaultGravityScale;
+    private bool isGravityInverted = false;
+
+    [Header("Effetti & Respawn")]
+    [SerializeField] private GameObject dustPrefab;     // Particelle atterraggio
+    [SerializeField] private float fastFallThreshold = -10f; // Soglia velocità per polvere
+    public Transform startPoint;                        // Punto di respawn
+
+    // --- STATO ---
     private Vector2 moveInput;
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-    }
+    private bool wasInAir;
 
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        
+        rb = GetComponent<Rigidbody2D>();
+
+        // Salviamo la gravità originale all'avvio
+        defaultGravityScale = rb.gravityScale;
+
+        // Cache delle azioni per pulizia
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
-
+        interactAction = playerInput.actions["Interact"];
+        
+        // Assicurati che l'azione esista nel tuo Input System
+        gravityAction = playerInput.actions.FindAction("gravityMask"); 
     }
 
     void OnEnable()
     {
-        moveAction.performed += OnMove;
-        moveAction.canceled  += OnMoveCanceled;
+        moveAction.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+        moveAction.canceled += ctx => moveInput = Vector2.zero;
         
         jumpAction.performed += OnJump;
+        
+        if (interactAction != null) interactAction.performed += OnInteractTriggered;
+        if (gravityAction != null) gravityAction.performed += OnToggleGravity;
     }
 
     void OnDisable()
     {
-        moveAction.performed -= OnMove;
-        moveAction.canceled  -= OnMoveCanceled;
+        moveAction.performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
+        moveAction.canceled -= ctx => moveInput = Vector2.zero;
         
         jumpAction.performed -= OnJump;
-    }
-    
-    
-    private void OnJump(InputAction.CallbackContext ctx)
-    {
-        if (!isOnGround) return;
-
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-
-        anim.SetBool("isJumping", true);
+        
+        if (interactAction != null) interactAction.performed -= OnInteractTriggered;
+        if (gravityAction != null) gravityAction.performed -= OnToggleGravity;
     }
 
+    // --- LOGICA MOVIMENTO & FISICA ---
 
-    
-    private void OnMove(InputAction.CallbackContext ctx)
+    void FixedUpdate()
     {
-        moveInput = ctx.ReadValue<Vector2>();
-    }
-
-    private void OnMoveCanceled(InputAction.CallbackContext ctx)
-    {
-        moveInput = Vector2.zero;
-    }
-
-
-
-    /*private void JumpAction()
-    {
-        if (isOnGround)
-        {
-            Debug.Log("ciaooo");
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-
-        }
-        /*         anim.SetBool("isJumping", !isOnGround);
-                anim.SetFloat("yVelocity", rb.linearVelocityY); */
-
-
-        /* rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); */
-
-    //}
-
-    private void FlipCharacter()
-    {
-        if (moveInput.x > 0.1f)
-        {
-            spriteRenderer.flipX = false;
-        }
-        else if (moveInput.x < -0.1f)
-        {
-            spriteRenderer.flipX = true;
-
-        }
-
-    }
-
-    private void AnimateCharacter()
-    {
-        /*         anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
-                anim.SetBool("isJumping", !isOnGround);
-                anim.SetFloat("yVelocity", rb.linearVelocityY); */
-    }
-
-    private void MoveAction()
-    {
-        /* transform.position += new Vector3(moveInput.x * movSpeed * Time.deltaTime, 0, 0); */
+        // Movimento orizzontale
         rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
-        anim.SetBool("move", true);
+
+        // Logica Polvere (Dust) all'atterraggio
+        CheckLandingDust();
     }
 
     void Update()
     {
         FlipCharacter();
-        AnimateCharacter();
     }
 
-    void FixedUpdate()
-    {    
-        rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
+    private void CheckLandingDust()
+    {
+        // Se non siamo a terra, segniamo che siamo in aria
+        if (!isOnGround) 
+        {
+            wasInAir = true;
+        }
+        // Se eravamo in aria e ora tocchiamo terra -> Atterraggio!
+        else if (wasInAir)
+        {
+            // Spawn particelle solo se cadevamo veloce (o se la gravità è invertita, se salivamo veloce)
+            float verticalSpeed = isGravityInverted ? -rb.linearVelocity.y : rb.linearVelocity.y;
 
-        anim.SetBool("move", Mathf.Abs(moveInput.x) > 0.01f);
+            if (verticalSpeed < fastFallThreshold) 
+            {
+                SpawnDust();
+            }
+            
+            wasInAir = false;
+            anim.SetBool("isJumping", false);
+        }
+    }
 
+    // --- LOGICA SALTO ---
+
+    private void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (isOnGround)
+        {
+            // Se gravità invertita, saltiamo verso il basso (-1), altrimenti verso l'alto (1)
+            float jumpDirection = isGravityInverted ? -1f : 1f;
+
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * jumpDirection);
+            
+            anim.SetBool("isJumping", true);
+            
+            // Opzionale: Dust anche quando salti
+            SpawnDust();
+        }
+    }
+
+    // --- LOGICA GRAVITA' ---
+
+    private void OnToggleGravity(InputAction.CallbackContext ctx)
+    {
+        isGravityInverted = !isGravityInverted;
+
+        // 1. Inverti la fisica
+        rb.gravityScale = isGravityInverted ? -defaultGravityScale : defaultGravityScale;
+
+        // 2. Capovolgi visivamente il personaggio (Flip Y)
+        // Usiamo Scale invece di FlipY dello sprite per girare anche il GroundCheck!
+        FlipCharacter(); 
+    }
+
+    private void ResetGravity()
+    {
+        // Utile quando si muore per resettare lo stato
+        isGravityInverted = false;
+        rb.gravityScale = defaultGravityScale;
+        FlipCharacter(); // Riapplica la scala corretta
+    }
+
+    // --- LOGICA VISIVA (FLIP) ---
+
+    private void FlipCharacter()
+    {
+        // Gestione Scala Y (Gravità)
+        float scaleY = isGravityInverted ? -1f : 1f;
+
+        // Gestione Scala X (Direzione)
+        // Manteniamo la X corrente ma ne forziamo il segno
+        float scaleX = transform.localScale.x;
+
+        if (moveInput.x > 0.1f)
+        {
+            scaleX = Mathf.Abs(scaleX); // Guarda a destra (Positivo)
+        }
+        else if (moveInput.x < -0.1f)
+        {
+            scaleX = -Mathf.Abs(scaleX); // Guarda a sinistra (Negativo)
+        }
+
+        // Applichiamo la trasformazione completa
+        transform.localScale = new Vector3(scaleX, scaleY, 1);
+    }
+
+    private void SpawnDust()
+    {
+        if (dustPrefab != null && groundCheck != null)
+        {
+            // Creiamo la polvere
+            GameObject dust = Instantiate(dustPrefab, groundCheck.position, Quaternion.identity);
+            
+            // Se siamo a testa in giù, giriamo anche la polvere!
+            if (isGravityInverted)
+            {
+                dust.transform.localScale = new Vector3(1, -1, 1);
+            }
+        }
+    }
+
+    // --- INTERAZIONE & RESPAWN ---
+
+    private void OnInteractTriggered(InputAction.CallbackContext ctx)
+    {
+        if (currentInteractable != null)
+        {
+            currentInteractable.Interact();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Interazione
+        if (collision.TryGetComponent(out IInteractable interactable))
+            currentInteractable = interactable;
+
+        // Morte / Respawn
+        if (collision.CompareTag("DeathBox"))
+        {
+            Debug.Log("Respawn!");
+            
+            // Resetta la posizione
+            if(startPoint != null)
+            {
+                transform.position = startPoint.position;
+                transform.rotation = startPoint.rotation;
+                
+                // IMPORTANTE: Resetta la velocità per non conservare inerzia mortale
+                rb.linearVelocity = Vector2.zero; 
+
+                // OPZIONALE: Vuoi resettare la gravità quando muore? 
+                // Se sì, decommenta la riga sotto:
+                // ResetGravity(); 
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
+            if (currentInteractable == interactable)
+            {
+                currentInteractable = null;
+                // Chiude l'UI se ti allontani
+                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen) 
+                    InteractionUI.Instance.CloseWindow();
+            }
+        }
     }
 }

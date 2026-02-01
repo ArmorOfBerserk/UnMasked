@@ -1131,7 +1131,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2139,6 +2139,22 @@ PrefabInstance:
       propertyPath: mask
       value: 
       objectReference: {fileID: 645696654}
+    - target: {fileID: 2717725461909096197, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: dustPrefab
+      value: 
+      objectReference: {fileID: 8792670124234565536, guid: a913d625c964f6d45a564dc5db1df6f8, type: 3}
+    - target: {fileID: 2717725461909096197, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: startPoint
+      value: 
+      objectReference: {fileID: 519635399}
+    - target: {fileID: 2717725461909096197, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: fastFallThreshold
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339016025646149399, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.573
+      objectReference: {fileID: 0}
     - target: {fileID: 5502481585085032322, guid: 2f7aa4ce4bfd555428ba4cd04afbadae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.62
@@ -3182,7 +3198,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
