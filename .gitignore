@@ -98,10 +98,12 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# Rider / IntelliJ
-.idea/
-*.iml
+# add .venv
+.venv/
 
-# Rider specific
-*.sln.iml
-*.DotSettings.user
+dist/
+Assets/StreamingAssets/eyetracking.exe
+.gitignore
+dist/
+
+.venv

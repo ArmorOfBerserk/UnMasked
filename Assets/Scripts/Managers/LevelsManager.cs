@@ -1,62 +1,74 @@
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System; // Necessario per usare le Liste
 
 public class LevelsManager : MonoBehaviour
 {
     public static LevelsManager Instance;
-    
-    [Header("Level Info")]
-    public int currentLevel = 0;
-    public int totalLevels = 5;
-    
+
+    [Header("Configurazione Livelli")]
+    // Trascina qui i nomi delle scene nell'ordine corretto dall'Inspector
+    public List<string> levelScenes = new List<string>();
+
+    private int currentLevelIndex = 0;
+
     void Awake()
     {
-        // Singleton - sopravvive tra scene
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-    
-    // Carica livello specifico
-    public void LoadLevel(int levelIndex)
+
+    // Carica un livello in base alla sua posizione nella lista
+    public void LoadLevelByIndex(int index)
     {
-        currentLevel = levelIndex;
-        SceneManager.LoadScene("level" + levelIndex);
-    }
-    
-    // Prossimo livello
-    public void NextLevel()
-    {
-        currentLevel++;
-        
-        if (currentLevel > totalLevels)
+        if (index >= 0 && index < levelScenes.Count)
         {
-            // Hai vinto!
-            SceneManager.LoadScene("GameOver");
+            currentLevelIndex = index;
+            SceneManager.LoadScene(levelScenes[currentLevelIndex]);
         }
         else
         {
-            SceneManager.LoadScene("level" + currentLevel);
+            Debug.LogError("Indice livello non valido nella lista!");
         }
     }
-    
-    // Ricomincia livello corrente
+
+    // Passa al livello successivo nella lista
+    public void NextLevel()
+    {
+        currentLevelIndex++;
+
+        if (currentLevelIndex < levelScenes.Count)
+        {
+            SceneManager.LoadScene(levelScenes[currentLevelIndex]);
+        }
+        else
+        {
+            // Se abbiamo finito la lista, vai al Game Over o Menu
+            Debug.Log("Ultimo livello completato!");
+            SceneManager.LoadScene("GameOver");
+        }
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    
-    // Torna al menu
+
     public void GoToMenu()
     {
-        currentLevel = 0;
+        currentLevelIndex = 0;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public static implicit operator LevelsManager(EventMessageManager v)
+    {
+        throw new NotImplementedException();
     }
 }
