@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndLevelScript : MonoBehaviour
 {
-    
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,7 +13,9 @@ public class EndLevelScript : MonoBehaviour
 
             if (other.GetComponent<PlayerController>().CheckChiave())
             {
-                TransitionManager.Instance.TransitionToLevel("NextLevel");
+                //Ti riporta al menu' principale
+                Time.timeScale = 1f;
+                SceneManager.LoadScene("menu");
 
             }
             // Opzione 2: Mostra UI prima

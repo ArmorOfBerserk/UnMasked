@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
 
+    private PlayerAudio playerAudio;
+
     // --- INTERAZIONE ---
     private IInteractable currentInteractable;
 
@@ -42,15 +44,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Slider maskUI;
     [SerializeField] GameObject hideMask;
 
+    [SerializeField] private float stepRate = 0.3f;  // Ogni quanto tempo suona il passo (in secondi)
+
     // --- STATO ---
     private Vector2 moveInput;
     private bool wasInAir;
     public bool canMove = true;
+    private float stepTimer;
 
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerAudio = GetComponent<PlayerAudio>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -78,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         jumpAction.performed += OnJump;
 
         if (interactAction != null) interactAction.performed += OnInteractTriggered;
-        if (gravityAction != null) gravityAction.performed += OnToggleGravity;
+/*         if (gravityAction != null) gravityAction.performed += OnToggleGravity; */
     }
 
     void OnDisable()
@@ -89,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         jumpAction.performed -= OnJump;
 
         if (interactAction != null) interactAction.performed -= OnInteractTriggered;
-        if (gravityAction != null) gravityAction.performed -= OnToggleGravity;
+/*         if (gravityAction != null) gravityAction.performed -= OnToggleGravity; */
     }
 
     // --- LOGICA MOVIMENTO & FISICA ---
@@ -113,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
             EquipMask();
         }
 
+        HandleFootsteps();
+
         AnimateCharacter();
 
         if (!canMove)
@@ -126,6 +134,26 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         rb.linearVelocity = Vector2.zero;
         EventMessageManager.StartEquipMask();
+    }
+
+    private void HandleFootsteps()
+    {
+        // Suoniamo solo se: Siamo a terra E ci stiamo muovendo E non stiamo scivolando contro un muro da fermi
+        if (isOnGround && Mathf.Abs(moveInput.x) > 0.1f)
+        {
+            stepTimer -= Time.deltaTime;
+
+            if (stepTimer <= 0 && canMove)
+            {
+                playerAudio.PlayAudioPassi();
+                stepTimer = stepRate;
+            }
+        }
+        else
+        {
+            // Se mi fermo, resetto il timer così appena riparto il suono è immediato
+            stepTimer = 0;
+        }
     }
 
     private void CheckLandingDust()
@@ -151,12 +179,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void SetNewStartPosition(Vector3 nuova_posizione)
+    {
+        startPoint.position = nuova_posizione;
+    }
+
     // --- LOGICA SALTO ---
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
         if (isOnGround && canMove)
         {
+            playerAudio.PlayAudioSalto();
             // Se gravità invertita, saltiamo verso il basso (-1), altrimenti verso l'alto (1)
             float jumpDirection = isGravityInverted ? -1f : 1f;
 

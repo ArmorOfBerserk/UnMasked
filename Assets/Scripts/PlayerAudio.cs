@@ -25,7 +25,7 @@ public class PlayerAudio : MonoBehaviour
     public void PlayAudioPassi()
     {
         if (audio.isPlaying) return;
-        
+
         audio.PlayOneShot(audioPassi);
     }
 

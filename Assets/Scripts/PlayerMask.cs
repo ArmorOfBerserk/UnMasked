@@ -31,6 +31,7 @@ public class PlayerMask : MonoBehaviour
 
 
 
+
     void EquipMask()
     {
         HandleInput();
@@ -47,6 +48,10 @@ public class PlayerMask : MonoBehaviour
         EventMessageManager.OnResetTimer -= ResetMask;
         EventMessageManager.OnStartEquipMask -= EquipMask;
     }
+
+    // =========================
+    // INPUT
+    // =========================
 
     // =========================
     // INPUT
@@ -69,11 +74,16 @@ public class PlayerMask : MonoBehaviour
                 break;
 
             case MaskState.Finished:
-                // Non fa nulla
+                // MODIFICA QUI:
+                // Anche se è finita, dobbiamo mandare l'evento di STOP.
+                // In questo modo il PlayerMovement riceve il segnale e rimette canMove = true.
+                EventMessageManager.StopUsingMask();
+
+                // Opzionale: Puoi far suonare un suono di "Errore/Vuoto" qui
+                // AudioManager.Instance.PlayEmptySound(); 
                 break;
         }
     }
-
     // =========================
     // STATE CHANGES
     // =========================

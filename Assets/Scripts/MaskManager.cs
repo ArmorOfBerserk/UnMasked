@@ -29,22 +29,22 @@ public class MaskManager : MonoBehaviour
         originalColor = spriteRenderer.color;
     }
 
-    private void OnEnable()
+/*     private void OnEnable()
     {
         // Collega il tasto
         var action = playerInput.actions.FindAction("ShiftMask");
         if (action != null)
             action.performed += ctx => ToggleMask();
-    }
+    } */
 
-    private void OnDisable()
+/*     private void OnDisable()
     {
         var action = playerInput.actions.FindAction("ShiftMask");
         if (action != null)
             action.performed -= ctx => ToggleMask();
     }
-
-    private void ToggleMask()
+ */
+/*     private void ToggleMask()
     {
         isMaskActive = !isMaskActive;
 
@@ -55,7 +55,7 @@ public class MaskManager : MonoBehaviour
         OnMaskChanged?.Invoke(isMaskActive);
 
         Debug.Log("Stato Maschera: " + isMaskActive);
-    }
+    } */
     
     // Utile per chi si iscrive in ritardo (es. oggetti spawnati dopo)
     public bool IsMaskActive => isMaskActive;
