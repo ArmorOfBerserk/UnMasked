@@ -55,18 +55,18 @@ public class PlayerMovement : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         interactAction = playerInput.actions["Interact"];
-        
+
         // Assicurati che l'azione esista nel tuo Input System
-        gravityAction = playerInput.actions.FindAction("gravityMask"); 
+        gravityAction = playerInput.actions.FindAction("gravityMask");
     }
 
     void OnEnable()
     {
         moveAction.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         moveAction.canceled += ctx => moveInput = Vector2.zero;
-        
+
         jumpAction.performed += OnJump;
-        
+
         if (interactAction != null) interactAction.performed += OnInteractTriggered;
         if (gravityAction != null) gravityAction.performed += OnToggleGravity;
     }
@@ -75,9 +75,9 @@ public class PlayerMovement : MonoBehaviour
     {
         moveAction.performed -= ctx => moveInput = ctx.ReadValue<Vector2>();
         moveAction.canceled -= ctx => moveInput = Vector2.zero;
-        
+
         jumpAction.performed -= OnJump;
-        
+
         if (interactAction != null) interactAction.performed -= OnInteractTriggered;
         if (gravityAction != null) gravityAction.performed -= OnToggleGravity;
     }
@@ -95,13 +95,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        AnimateCharacter();
         FlipCharacter();
     }
 
     private void CheckLandingDust()
     {
         // Se non siamo a terra, segniamo che siamo in aria
-        if (!isOnGround) 
+        if (!isOnGround)
         {
             wasInAir = true;
         }
@@ -111,11 +112,11 @@ public class PlayerMovement : MonoBehaviour
             // Spawn particelle solo se cadevamo veloce (o se la gravità è invertita, se salivamo veloce)
             float verticalSpeed = isGravityInverted ? -rb.linearVelocity.y : rb.linearVelocity.y;
 
-            if (verticalSpeed < fastFallThreshold) 
+            if (verticalSpeed < fastFallThreshold)
             {
                 SpawnDust();
             }
-            
+
             wasInAir = false;
             anim.SetBool("isJumping", false);
         }
@@ -131,9 +132,9 @@ public class PlayerMovement : MonoBehaviour
             float jumpDirection = isGravityInverted ? -1f : 1f;
 
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * jumpDirection);
-            
+
             anim.SetBool("isJumping", true);
-            
+
             // Opzionale: Dust anche quando salti
             SpawnDust();
         }
@@ -150,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
 
         // 2. Capovolgi visivamente il personaggio (Flip Y)
         // Usiamo Scale invece di FlipY dello sprite per girare anche il GroundCheck!
-        FlipCharacter(); 
+        FlipCharacter();
     }
 
     private void ResetGravity()
@@ -191,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Creiamo la polvere
             GameObject dust = Instantiate(dustPrefab, groundCheck.position, Quaternion.identity);
-            
+
             // Se siamo a testa in giù, giriamo anche la polvere!
             if (isGravityInverted)
             {
@@ -220,15 +221,15 @@ public class PlayerMovement : MonoBehaviour
         if (collision.CompareTag("DeathBox"))
         {
             Debug.Log("Respawn!");
-            
+
             // Resetta la posizione
-            if(startPoint != null)
+            if (startPoint != null)
             {
                 transform.position = startPoint.position;
                 transform.rotation = startPoint.rotation;
-                
+
                 // IMPORTANTE: Resetta la velocità per non conservare inerzia mortale
-                rb.linearVelocity = Vector2.zero; 
+
 
                 // OPZIONALE: Vuoi resettare la gravità quando muore? 
                 // Se sì, decommenta la riga sotto:
@@ -245,9 +246,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 currentInteractable = null;
                 // Chiude l'UI se ti allontani
-                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen) 
+                if (InteractionUI.Instance != null && InteractionUI.Instance.IsOpen)
                     InteractionUI.Instance.CloseWindow();
             }
         }
+    }
+
+    private void AnimateCharacter()
+    {
+        anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
+        anim.SetBool("isJumping", !isOnGround);
+        anim.SetFloat("yVelocity", rb.linearVelocityY);
     }
 }
