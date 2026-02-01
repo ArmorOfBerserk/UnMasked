@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -35,11 +36,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Effetti & Respawn")]
     [SerializeField] private GameObject dustPrefab;     // Particelle atterraggio
     [SerializeField] private float fastFallThreshold = -10f; // Soglia velocità per polvere
-    public Transform startPoint;                        // Punto di respawn
+    public Transform startPoint;
+
+    [Header("Maschera UI")]
+    [SerializeField] Slider maskUI;
+    [SerializeField] GameObject hideMask;
 
     // --- STATO ---
     private Vector2 moveInput;
     private bool wasInAir;
+    public bool canMove = true;
 
     void Awake()
     {
@@ -58,12 +64,16 @@ public class PlayerMovement : MonoBehaviour
 
         // Assicurati che l'azione esista nel tuo Input System
         gravityAction = playerInput.actions.FindAction("gravityMask");
+        ResetPlayerStatsAndPosition();
     }
+
+
 
     void OnEnable()
     {
         moveAction.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         moveAction.canceled += ctx => moveInput = Vector2.zero;
+        EventMessageManager.OnLockPlayerMovement += () => canMove = true;
 
         jumpAction.performed += OnJump;
 
@@ -86,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!canMove)
+            return;
+
         // Movimento orizzontale
         rb.linearVelocity = new Vector2(moveInput.x * movSpeed, rb.linearVelocity.y);
 
@@ -95,8 +108,24 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (Keyboard.current.mKey.wasPressedThisFrame && isOnGround)
+        {
+            EquipMask();
+        }
+
         AnimateCharacter();
+
+        if (!canMove)
+            return;
+
         FlipCharacter();
+    }
+
+    void EquipMask()
+    {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
+        EventMessageManager.StartEquipMask();
     }
 
     private void CheckLandingDust()
@@ -223,10 +252,17 @@ public class PlayerMovement : MonoBehaviour
             // Resetta la posizione
             if (startPoint != null)
             {
-                transform.position = startPoint.position;
-                transform.rotation = startPoint.rotation;
+                ResetPlayerStatsAndPosition();
             }
         }
+    }
+
+    private void ResetPlayerStatsAndPosition()
+    {
+        canMove = true;
+        transform.position = startPoint.position;
+        transform.rotation = startPoint.rotation;
+        EventMessageManager.ResetTimerMask();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -248,5 +284,6 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("run", Mathf.Abs(rb.linearVelocityX), 0.01f, Time.fixedDeltaTime);
         anim.SetBool("isJumping", !isOnGround);
         anim.SetFloat("yVelocity", rb.linearVelocityY);
+        anim.SetBool("isEquipMask", !canMove);
     }
 }

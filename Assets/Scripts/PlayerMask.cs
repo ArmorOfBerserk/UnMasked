@@ -1,63 +1,179 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+public enum MaskState
+{
+    Idle,
+    Running,
+    Paused,
+    Finished
+}
+
 
 public class PlayerMask : MonoBehaviour
 {
-    [SerializeField] private int timeout = 10;
-    [SerializeField] public GameObject mask;
-    private PlayerInput _playerInput;
-    private bool maskActive = false;
-    
+    [Header("Config")]
+    [SerializeField] private float timeout = 10f;
 
-    void Start()
+    [Header("References")]
+    [SerializeField] private GameObject mask;
+    [SerializeField] private Slider maskSlider;
+    [SerializeField] private GameObject dxEye;
+    [SerializeField] private GameObject sxEye;
+
+    private Coroutine maskCoroutine;
+    private float currentTime;
+    private MaskState state = MaskState.Idle;
+
+
+
+    void EquipMask()
     {
-        mask.SetActive(false);
+        HandleInput();
     }
 
-    private InputAction toggleMask;
-
-    void Awake()
+    void OnEnable()
     {
-        //_playerInput = GetComponent<PlayerInput>();
-        //toggleMask = _playerInput.actions["Active/DeactiveMask"];
-    }
-
-    /*void OnEnable()
-    {
-        toggleMask.started += OnToggleMask;
+        EventMessageManager.OnResetTimer += ResetMask;
+        EventMessageManager.OnStartEquipMask += EquipMask;
     }
 
     void OnDisable()
     {
-        toggleMask.started -= OnToggleMask;
+        EventMessageManager.OnResetTimer -= ResetMask;
+        EventMessageManager.OnStartEquipMask -= EquipMask;
     }
 
-    void OnToggleMask(InputAction.CallbackContext ctx)
-    {
-        if (maskActive) return;
-        StartCoroutine(ShowMask());
-    }*/
+    // =========================
+    // INPUT
+    // =========================
 
-    void Update()
+    private void HandleInput()
     {
-        if (Keyboard.current.mKey.wasPressedThisFrame && !maskActive)
+        switch (state)
         {
-            StartCoroutine(ShowMask());
+            case MaskState.Idle:
+                StartMask();
+                break;
+
+            case MaskState.Running:
+                PauseMask();
+                break;
+
+            case MaskState.Paused:
+                ResumeMask();
+                break;
+
+            case MaskState.Finished:
+                // Non fa nulla
+                break;
         }
     }
 
-    private IEnumerator ShowMask()
+    // =========================
+    // STATE CHANGES
+    // =========================
+
+    private void StartMask()
     {
-        maskActive = true;
+        state = MaskState.Running;
+        currentTime = timeout;
+
         mask.SetActive(true);
+        SetEyesVisible(true);
 
-        yield return new WaitForSeconds(timeout);
+        if (maskSlider != null)
+        {
+            maskSlider.maxValue = timeout;
+            maskSlider.value = timeout;
+        }
 
-        mask.SetActive(false);
-        maskActive = false;
+        maskCoroutine = StartCoroutine(MaskTimer());
     }
 
+    private void PauseMask()
+    {
+        EventMessageManager.StopUsingMask();
+        state = MaskState.Paused;
+        SetEyesVisible(false);
+    }
+
+    private void ResumeMask()
+    {
+        state = MaskState.Running;
+        SetEyesVisible(true);
+    }
+
+    private void FinishMask()
+    {
+        state = MaskState.Finished;
+
+        EventMessageManager.StopUsingMask();
+
+        mask.SetActive(false);
+        SetEyesVisible(true);
+
+        if (maskCoroutine != null)
+        {
+            StopCoroutine(maskCoroutine);
+            maskCoroutine = null;
+        }
+    }
+
+    private void ResetMask()
+    {
+
+        state = MaskState.Idle;
+        currentTime = timeout;
+
+        if (maskCoroutine != null)
+        {
+            StopCoroutine(maskCoroutine);
+            maskCoroutine = null;
+        }
+
+        mask.SetActive(false);
+        SetEyesVisible(true);
+
+        if (maskSlider != null)
+        {
+            maskSlider.value = timeout;
+        }
+    }
+
+    // =========================
+    // TIMER
+    // =========================
+
+    private IEnumerator MaskTimer()
+    {
+        while (currentTime > 0f)
+        {
+            if (state == MaskState.Running)
+            {
+                currentTime -= Time.deltaTime;
+
+                if (maskSlider != null)
+                {
+                    maskSlider.value = currentTime;
+                }
+            }
+
+            yield return null;
+        }
+
+        FinishMask();
+    }
+
+    // =========================
+    // VISUAL HELPERS
+    // =========================
+
+    private void SetEyesVisible(bool visible)
+    {
+        sxEye.SetActive(visible);
+        dxEye.SetActive(visible);
+    }
 }

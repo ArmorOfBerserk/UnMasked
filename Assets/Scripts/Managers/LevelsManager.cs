@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic; // Necessario per usare le Liste
+using System.Collections.Generic;
+using System; // Necessario per usare le Liste
 
 public class LevelsManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class LevelsManager : MonoBehaviour
     [Header("Configurazione Livelli")]
     // Trascina qui i nomi delle scene nell'ordine corretto dall'Inspector
     public List<string> levelScenes = new List<string>();
-    
+
     private int currentLevelIndex = 0;
 
     void Awake()
@@ -17,7 +18,6 @@ public class LevelsManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -65,5 +65,10 @@ public class LevelsManager : MonoBehaviour
     {
         currentLevelIndex = 0;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public static implicit operator LevelsManager(EventMessageManager v)
+    {
+        throw new NotImplementedException();
     }
 }

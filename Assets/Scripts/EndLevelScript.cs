@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EndLevelScript : MonoBehaviour
 {
-    // public GameObject nextLevelUI; // Opzionale: pannello "Livello Completato"
+    
 
     void OnTriggerEnter2D(Collider2D other)
     {
