@@ -1,16 +1,25 @@
 fileFormatVersion: 2
-guid: a4d717ca1d3e69a48885b2bb28c98a66
+guid: 79b1cf03704e103438eb5ec2790e4e8f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7460046300004610927
-    second: Jump_0
+      213: 1496924104558217635
+    second: SHADOW Series - Hallokin (free)-Sheet_0
   - first:
-      213: 7034338576483803127
-    second: Jump_1
+      213: 8076480550626766562
+    second: SHADOW Series - Hallokin (free)-Sheet_1
   - first:
-      213: 6054277451648750542
-    second: Jump_2
+      213: 1848506999446417932
+    second: SHADOW Series - Hallokin (free)-Sheet_2
+  - first:
+      213: -7790799409654747979
+    second: SHADOW Series - Hallokin (free)-Sheet_3
+  - first:
+      213: -6260310209318331313
+    second: SHADOW Series - Hallokin (free)-Sheet_4
+  - first:
+      213: 7374108959415144012
+    second: SHADOW Series - Hallokin (free)-Sheet_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jump_0
+      name: SHADOW Series - Hallokin (free)-Sheet_0
       rect:
         serializedVersion: 2
         x: 50
@@ -121,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f63fdb7b598678760800000000000000
-      internalID: 7460046300004610927
+      spriteID: 3a989e3ca8426c410800000000000000
+      internalID: 1496924104558217635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_1
+      name: SHADOW Series - Hallokin (free)-Sheet_1
       rect:
         serializedVersion: 2
         x: 242
@@ -143,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ffd4217aadfe9160800000000000000
-      internalID: 7034338576483803127
+      spriteID: 2eea57f054c651070800000000000000
+      internalID: 8076480550626766562
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_2
+      name: SHADOW Series - Hallokin (free)-Sheet_2
       rect:
         serializedVersion: 2
         x: 434
@@ -165,8 +174,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ec35e2de34d150450800000000000000
-      internalID: 6054277451648750542
+      spriteID: c02b3da725737a910800000000000000
+      internalID: 1848506999446417932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SHADOW Series - Hallokin (free)-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 47
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bca43fd63581e390800000000000000
+      internalID: -7790799409654747979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SHADOW Series - Hallokin (free)-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 47
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4c54dd7809ee19a0800000000000000
+      internalID: -6260310209318331313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SHADOW Series - Hallokin (free)-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 47
+        width: 16
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e07f46709165660800000000000000
+      internalID: 7374108959415144012
       vertices: []
       indices: 
       edges: []
@@ -175,7 +250,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 969d0c00b23d12e4ca502cbefc7368c3
+    spriteID: 44547c1367841974787631d5e9bf6af7
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Jump_0: 7460046300004610927
-      Jump_1: 7034338576483803127
-      Jump_2: 6054277451648750542
+      SHADOW Series - Hallokin (free)-Sheet_0: 1496924104558217635
+      SHADOW Series - Hallokin (free)-Sheet_1: 8076480550626766562
+      SHADOW Series - Hallokin (free)-Sheet_2: 1848506999446417932
+      SHADOW Series - Hallokin (free)-Sheet_3: -7790799409654747979
+      SHADOW Series - Hallokin (free)-Sheet_4: -6260310209318331313
+      SHADOW Series - Hallokin (free)-Sheet_5: 7374108959415144012
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

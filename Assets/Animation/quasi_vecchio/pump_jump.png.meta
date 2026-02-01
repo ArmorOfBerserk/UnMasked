@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: a4d717ca1d3e69a48885b2bb28c98a66
+guid: c0cd560e9ea1a1543a0a2c4bb7a7cbdd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7460046300004610927
-    second: Jump_0
+      213: -4518081948766468612
+    second: Sesso Jump_0
   - first:
-      213: 7034338576483803127
-    second: Jump_1
+      213: -979935759775797558
+    second: Sesso Jump_1
   - first:
-      213: 6054277451648750542
-    second: Jump_2
+      213: 617675910012420723
+    second: Sesso Jump_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Jump_0
+      name: Sesso Jump_0
       rect:
         serializedVersion: 2
         x: 50
@@ -121,14 +121,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f63fdb7b598678760800000000000000
-      internalID: 7460046300004610927
+      spriteID: cf58ba9c76c8c41c0800000000000000
+      internalID: -4518081948766468612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_1
+      name: Sesso Jump_1
       rect:
         serializedVersion: 2
         x: 242
@@ -143,14 +143,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ffd4217aadfe9160800000000000000
-      internalID: 7034338576483803127
+      spriteID: ace6cdf4e919662f0800000000000000
+      internalID: -979935759775797558
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Jump_2
+      name: Sesso Jump_2
       rect:
         serializedVersion: 2
         x: 434
@@ -165,8 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ec35e2de34d150450800000000000000
-      internalID: 6054277451648750542
+      spriteID: 3724b92b7fc629800800000000000000
+      internalID: 617675910012420723
       vertices: []
       indices: 
       edges: []
@@ -175,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 969d0c00b23d12e4ca502cbefc7368c3
+    spriteID: 4e758d4d8db0a7345981e33561a7d495
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Jump_0: 7460046300004610927
-      Jump_1: 7034338576483803127
-      Jump_2: 6054277451648750542
+      Sesso Jump_0: -4518081948766468612
+      Sesso Jump_1: -979935759775797558
+      Sesso Jump_2: 617675910012420723
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

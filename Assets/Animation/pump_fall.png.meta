@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 5eb9008f4eae769499c8731249b25f9b
+guid: 4fd4bbaddbd043d4d930e25636b1d5dd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7454585242970673340
-    second: Fall 1_0
+      213: 1763891479544541723
+    second: Sex_0
   - first:
-      213: -54086892983063764
-    second: Fall 1_1
+      213: 7230956373380542908
+    second: Sex_1
   - first:
-      213: -3243541930970961681
-    second: Fall 1_2
+      213: 1907143588629092803
+    second: Sex_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fall 1_0
+      name: Sex_0
       rect:
         serializedVersion: 2
         x: 50
@@ -121,14 +121,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cb0d22b48c1047760800000000000000
-      internalID: 7454585242970673340
+      spriteID: b12379484f99a7810800000000000000
+      internalID: 1763891479544541723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall 1_1
+      name: Sex_1
       rect:
         serializedVersion: 2
         x: 242
@@ -143,14 +143,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c2b6db4e148df3ff0800000000000000
-      internalID: -54086892983063764
+      spriteID: cb1b1b5a284895460800000000000000
+      internalID: 7230956373380542908
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fall 1_2
+      name: Sex_2
       rect:
         serializedVersion: 2
         x: 434
@@ -165,8 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe8246e7ccf9cf2d0800000000000000
-      internalID: -3243541930970961681
+      spriteID: 3c996e74df8877a10800000000000000
+      internalID: 1907143588629092803
       vertices: []
       indices: 
       edges: []
@@ -175,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1d0286e5f7afe0d4e8fe033b485d99cb
+    spriteID: 4ad5ea5855540dc43b28f940a4ea1f51
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Fall 1_0: 7454585242970673340
-      Fall 1_1: -54086892983063764
-      Fall 1_2: -3243541930970961681
+      Sex_0: 1763891479544541723
+      Sex_1: 7230956373380542908
+      Sex_2: 1907143588629092803
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

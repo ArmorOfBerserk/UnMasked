@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 429ed3c594cbf654e9e7e624111a53a0
+guid: 0e226529716beec4a8ab6504db74a1e9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8961190892485021143
-    second: SHADOW Series - Hallokin (free)_0
+      213: 4944230376442633554
+    second: Run_0
   - first:
-      213: -6422567725850373206
-    second: SHADOW Series - Hallokin (free)_1
+      213: -2274363484027164459
+    second: Run_1
   - first:
-      213: -1604344815295110646
-    second: SHADOW Series - Hallokin (free)_2
+      213: 8284087734974297348
+    second: Run_2
   - first:
-      213: -4948066982753376125
-    second: SHADOW Series - Hallokin (free)_3
+      213: 5304202850863732263
+    second: Run_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,7 +109,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SHADOW Series - Hallokin (free)_0
+      name: Run_0
       rect:
         serializedVersion: 2
         x: 49
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 922f6f89c5473a380800000000000000
-      internalID: -8961190892485021143
+      spriteID: 25d1f8be45f6d9440800000000000000
+      internalID: 4944230376442633554
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SHADOW Series - Hallokin (free)_1
+      name: Run_1
       rect:
         serializedVersion: 2
         x: 240
@@ -146,14 +146,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aa3dcca7ea47ed6a0800000000000000
-      internalID: -6422567725850373206
+      spriteID: 5d8e07c1676df60e0800000000000000
+      internalID: -2274363484027164459
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SHADOW Series - Hallokin (free)_2
+      name: Run_2
       rect:
         serializedVersion: 2
         x: 433
@@ -168,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a02681304e83cb9e0800000000000000
-      internalID: -1604344815295110646
+      spriteID: 405305b67edf6f270800000000000000
+      internalID: 8284087734974297348
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SHADOW Series - Hallokin (free)_3
+      name: Run_3
       rect:
         serializedVersion: 2
         x: 625
@@ -190,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 38865209b4fe45bb0800000000000000
-      internalID: -4948066982753376125
+      spriteID: 726d856d3605c9940800000000000000
+      internalID: 5304202850863732263
       vertices: []
       indices: 
       edges: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4ba5aa081df10b94e9640377c850999f
+    spriteID: 96c3d3b17156b8945870b42f44fd9e08
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SHADOW Series - Hallokin (free)_0: -8961190892485021143
-      SHADOW Series - Hallokin (free)_1: -6422567725850373206
-      SHADOW Series - Hallokin (free)_2: -1604344815295110646
-      SHADOW Series - Hallokin (free)_3: -4948066982753376125
+      Run_0: 4944230376442633554
+      Run_1: -2274363484027164459
+      Run_2: 8284087734974297348
+      Run_3: 5304202850863732263
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
