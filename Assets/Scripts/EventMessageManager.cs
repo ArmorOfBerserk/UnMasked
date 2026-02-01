@@ -8,6 +8,14 @@ public class EventMessageManager : MonoBehaviour
     public static event Action OnStartEquipMask;
     public static event Action OnLockPlayerMovement;
 
+    public static event Action OnStartCameraScroll;
+
+    public static void StartCameraScrolling()
+    {
+        OnStartCameraScroll?.Invoke();
+    }
+
+
     public static void ResetTimerMask()
     {
         OnResetTimer?.Invoke();
@@ -22,4 +30,7 @@ public class EventMessageManager : MonoBehaviour
     {
         OnLockPlayerMovement?.Invoke();
     }
+
+  
+
 }
