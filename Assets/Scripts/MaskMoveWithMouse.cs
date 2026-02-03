@@ -18,22 +18,40 @@ public class MaskMoveWithMouse : MonoBehaviour
     public float activationInterval = 2f;
 
     [Header("Blinking (Scaling)")]
-    public Transform eyeDx; // Usa il Transform invece dello SpriteRenderer
-    public Transform eyeSx; 
-    public float blinkDuration = 0.1f;  // Durata totale dello sbatte
-    public float blinkInterval = 4f;    // Intervallo tra gli sbatte
-    public float closedScaleY = 0.05f;  // La scala Y quando l'occhio è "chiuso"
+    public Transform eyeDx;
+    public Transform eyeSx;
+    public float blinkDuration = 0.1f; 
+    public float blinkInterval = 4f;  
+    public float closedScaleY = 0.05f;  
 
     private float noiseTimer;
     private Vector3 originalScale;
 
     void Start()
     {
-        if (eyeDx != null) originalScale = eyeDx.localScale;
+        Cursor.lockState = CursorLockMode.Confined;
+
+    
+        if (eyeDx != null)
+        {
+         
+            if (eyeDx.localScale.y > closedScaleY + 0.01f)
+            {
+                originalScale = eyeDx.localScale;
+            }
+        }
 
         if (canBlink && eyeDx != null && eyeSx != null)
         {
             StartCoroutine(BlinkScaleRoutine());
+        }
+    }
+
+    void OnDisable()
+    {
+        if (eyeDx != null && originalScale != Vector3.zero)
+        {
+            SetEyesScale(originalScale.y);
         }
     }
 
@@ -69,7 +87,7 @@ public class MaskMoveWithMouse : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * smooth);
     }
 
-// Genera effetto apri e chiudi gli occhi
+ 
     private IEnumerator BlinkScaleRoutine()
     {
         while (true)
@@ -78,25 +96,32 @@ public class MaskMoveWithMouse : MonoBehaviour
 
             if (canBlink)
             {
-                // --- CHIUSURA ---
+               
                 float elapsed = 0;
                 while (elapsed < blinkDuration)
                 {
                     elapsed += Time.deltaTime;
-                    float newY = Mathf.Lerp(originalScale.y, closedScaleY, elapsed / blinkDuration);
+              
+                    float t = Mathf.Clamp01(elapsed / blinkDuration);
+                    float newY = Mathf.Lerp(originalScale.y, closedScaleY, t);
                     SetEyesScale(newY);
                     yield return null;
                 }
+          
+                SetEyesScale(closedScaleY);
 
                 // --- APERTURA ---
                 elapsed = 0;
                 while (elapsed < blinkDuration)
                 {
                     elapsed += Time.deltaTime;
-                    float newY = Mathf.Lerp(closedScaleY, originalScale.y, elapsed / blinkDuration);
+                    float t = Mathf.Clamp01(elapsed / blinkDuration);
+                    float newY = Mathf.Lerp(closedScaleY, originalScale.y, t);
                     SetEyesScale(newY);
                     yield return null;
                 }
+         
+                SetEyesScale(originalScale.y);
             }
         }
     }
@@ -106,6 +131,6 @@ public class MaskMoveWithMouse : MonoBehaviour
         Vector3 newScale = new Vector3(originalScale.x, y, originalScale.z);
         eyeDx.localScale = newScale;
         eyeSx.localScale = newScale;
-     
+
     }
 }

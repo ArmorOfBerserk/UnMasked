@@ -865,7 +865,7 @@ GameObject:
   - component: {fileID: 664526789}
   - component: {fileID: 664526788}
   m_Layer: 0
-  m_Name: Animation_Player_Idle
+  m_Name: Idle_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2288,7 +2288,7 @@ GameObject:
   - component: {fileID: 1531686529}
   - component: {fileID: 1531686528}
   m_Layer: 0
-  m_Name: Background
+  m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
